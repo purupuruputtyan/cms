@@ -20,7 +20,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 * 本の一覧表示(books.blade.php)
 */
 Route::get('/', function () {
-    return view('books');
+    $books = Book::orderBy('created_at', 'asc')->get();
+    return view('books', [
+        'books' => $books
+    ]);
+    //return view('books',compact('books')); //も同じ意味
 });
 
 /**
@@ -29,7 +33,10 @@ Route::get('/', function () {
 Route::post('/books', function (Request $request) {
   //バリデーション
     $validator = Validator::make($request->all(), [
-        'item_name' => 'required|max:255',
+        'item_name' => 'required|min:3|max:255',
+        'item_number' => 'required|min:1|max:3',
+        'item_amount' => 'required|max:6',
+        'published' => 'required|date_format:Y-m-d'
     ]);
 
     //バリデーション:エラー
@@ -38,14 +45,14 @@ Route::post('/books', function (Request $request) {
             ->withInput()
             ->withErrors($validator);
     }
-    
+
     // Eloquentモデル（登録処理）
     $books = new Book;
     $books->item_name = $request->item_name;
     $books->item_number = '1';
     $books->item_amount = '1000';
     $books->published = '2017-03-07 00:00:00';
-    $books->save(); 
+    $books->save();
     return redirect('/');
 
 });
@@ -61,5 +68,6 @@ Route::patch('/book/{book}', function(Book $book){
 * 本を削除
 */
 Route::delete('/book/{book}', function (Book $book) {
-    //
+    $book->delete();       //追加
+    return redirect('/');  //追加
 });
