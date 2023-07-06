@@ -77,14 +77,12 @@
                                 </td>
                                 <!--本: 更新ボタン-->
                                 <td>
-                                  <form action="{{ url('book/'.$book->id) }}" method="POST">
-                                    @csrf               <!-- CSRFからの保護 -->
-                                    @method('PATCH')   <!-- 擬似フォームメソッド -->
-
-                                    <button type="submit" class="btn btn-success">
-                                        更新
-                                    </button>
-                                 </form>
+                                    <form action="{{ url('booksedit/'.$book->id) }}" method="GET">
+                                        @csrf
+                                        <button type="submit" class="btn btn-success">
+                                            更新
+                                        </button>
+                                    </form>
                                 </td>
                                 <!-- 本: 削除ボタン -->
                                 <td>
