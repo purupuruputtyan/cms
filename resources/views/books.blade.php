@@ -6,7 +6,7 @@
         <div class="card-title">
             本のタイトル
         </div>
-        
+
         <!-- バリデーションエラーの表示に使用-->
         @include('common.errors')
         <!-- バリデーションエラーの表示に使用-->
