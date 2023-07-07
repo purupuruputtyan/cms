@@ -14,6 +14,7 @@ class CreateBooksTable extends Migration
     public function up()
     {
         Schema::create('books', function (Blueprint $table) {
+            $table->bigInteger('user_id'); //Add:user_id
             $table->bigIncrements('id');
             $table->string('item_name');
             $table->integer('item_number');
