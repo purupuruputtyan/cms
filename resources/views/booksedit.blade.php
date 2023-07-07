@@ -3,7 +3,7 @@
 <div class="rowcontainer">
     <div class="col-md-12">
     @include('common.errors')
-    <form action="{{ url('books/update') }}" method="POST">
+    <form enctype="multipart/form-data" action="{{ url('books/update') }}" method="POST">
         <!--item_name-->
         <div class="form-group">
             <label for="item_name">Title</label>
@@ -29,6 +29,12 @@
             <input type="datetime" name="published" class="form-control" value="{{$book->published}}"/>
         </div>
         <!--/ published-->
+        <!--画像-->
+        <div class="col-sm-6">
+            <label>画像</label>
+            <input type="file" name="item_img">
+        </div>
+        <!--/ 画像-->
         <!--更新ボタン/戻るボタン-->
         <div class="well well-sm">
             <button type="submit" class="btn btn-success">更新</button>

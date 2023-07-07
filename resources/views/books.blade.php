@@ -13,7 +13,7 @@
         @endif
 
         <!-- 本登録フォーム -->
-        <form action="{{ url('books') }}" method="POST" class="form-horizontal">
+        <form enctype="multipart/form-data" action="{{ url('books') }}"method="POST" class="form-horizontal">
             @csrf
 
             <!-- 本のタイトル -->
@@ -40,6 +40,12 @@
                     <input type="date" name="published" class="form-control">
                 </div>
             </div>
+            
+            <div class="col-sm-6">
+                <label>画像</label>
+                <input type="file" name="item_img">
+            </div>
+
 
             <!-- 本 登録ボタン -->
             <div class="form-group">
@@ -60,6 +66,7 @@
                 <table class="table table-striped task-table">
                     <!-- テーブルヘッダ -->
                     <thead>
+                        <th>画像</th>
                         <th>本のタイトル</th>
                         <th>公開日</th>
                         <th>金額</th>
@@ -72,6 +79,7 @@
                         @foreach ($books as $book)
                             <tr>
                                 <!-- 本の記録概要 -->
+                                <td><img src="upload/{{$book->item_img}}" width="100"></td>
                                 <td class="table-text">
                                     <div>{{ $book->item_name }}</div>
                                 </td>
