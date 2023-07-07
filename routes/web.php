@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-<?php
+
 use App\Book;
 use Illuminate\Http\Request; 
 
