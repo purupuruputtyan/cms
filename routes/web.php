@@ -12,7 +12,7 @@
 */
 
 use App\Book;
-use Illuminate\Http\Request; 
+use Illuminate\Http\Request;
 
 //本ダッシュボード表示
 Route::get('/', 'BooksController@index');
@@ -21,7 +21,7 @@ Route::get('/', 'BooksController@index');
 Route::post('/books','BooksController@store');
 
 //更新画面
-Route::post('/booksedit/{books}','BooksController@edit');
+Route::get('/booksedit/{books}','BooksController@edit');
 
 //更新処理
 Route::post('/books/update','BooksController@update');

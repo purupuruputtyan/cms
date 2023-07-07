@@ -42,7 +42,7 @@ class BooksController extends Controller
             'item_amount' => 'required|max:6',
             'published' => 'required',
         ]);
-        //バリデーション:エラー
+        //バリデーション:エラー
         if ($validator->fails()) {
             return redirect('/')
                 ->withInput()
@@ -55,6 +55,7 @@ class BooksController extends Controller
         $books->item_name   = $request->item_name;
         $books->item_number = $request->item_number;
         $books->item_amount = $request->item_amount;
+        $books->item_img = $filename;
         $books->published   = $request->published;
         $books->save();
         return redirect('/');
@@ -75,15 +76,15 @@ class BooksController extends Controller
                 ->withInput()
                 ->withErrors($validator);
         }
-        
+
         $file = $request->file('item_img'); //file取得
-            if( !empty($file) ){                //fileが空かチェック
-                $filename = $file->getClientOriginalName();   //ファイル名を取得
-                $move = $file->move('../upload/',$filename);  //ファイルを移動：パスが“./upload/”の場合もあるCloud9
-            }else{
-                $filename = "";
-            }
-          
+          if( !empty($file) ){                //fileが空かチェック
+              $filename = $file->getClientOriginalName();   //ファイル名を取得
+              $move = $file->move('../upload/',$filename);  //ファイルを移動：パスが“./upload/”の場合もあるCloud9
+          }else{
+              $filename = "";
+          }
+
         //Eloquentモデル（登録処理）
         $books = new Book;
         $books->user_id  = Auth::user()->id; //追加のコード
