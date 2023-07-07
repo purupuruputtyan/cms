@@ -5,7 +5,12 @@
     <div class="card-body">
         <!-- バリデーションエラーの表示に使用-->
         @include('common.errors')
-        <!-- バリデーションエラーの表示に使用-->
+        <!--フラッシュメッセージの表示-->
+        @if (session('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @endif
 
         <!-- 本登録フォーム -->
         <form action="{{ url('books') }}" method="POST" class="form-horizontal">
