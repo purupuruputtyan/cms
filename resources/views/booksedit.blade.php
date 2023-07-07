@@ -26,7 +26,7 @@
         <!--published-->
         <div class="form-group">
             <label for="published" name="published">Published</label>
-            <input type="date" name="published" class="form-control" value="{{$book->published}}"/>
+            <input type="datetime" name="published" class="form-control" value="{{$book->published}}"/>
         </div>
         <!--/ published-->
         <!--更新ボタン/戻るボタン-->

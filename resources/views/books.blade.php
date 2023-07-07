@@ -56,6 +56,7 @@
                     <!-- テーブルヘッダ -->
                     <thead>
                         <th>本のタイトル</th>
+                        <th>公開日</th>
                         <th>金額</th>
                         <th>数</th>
                         <th>&nbsp;</th>
@@ -65,15 +66,18 @@
                     <tbody>
                         @foreach ($books as $book)
                             <tr>
-                                <!-- 本タイトル -->
+                                <!-- 本の記録概要 -->
                                 <td class="table-text">
                                     <div>{{ $book->item_name }}</div>
                                 </td>
                                 <td class="table-text">
-                                    <div>{{ $book->item_amount}}</div>
+                                    <div>{{ $book->published }}</div>
                                 </td>
                                 <td class="table-text">
-                                    <div>{{ $book->item_number}}</div>
+                                    <div>{{ $book->item_amount }}</div>
+                                </td>
+                                <td class="table-text">
+                                    <div>{{ $book->item_number }}</div>
                                 </td>
                                 <!--本: 更新ボタン-->
                                 <td>
