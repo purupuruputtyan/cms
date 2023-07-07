@@ -99,7 +99,7 @@
                                     @csrf               <!-- CSRFからの保護 -->
                                     @method('DELETE')   <!-- 擬似フォームメソッド -->
 
-                                    <button type="submit" class="btn btn-danger">
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('削除してもよろしいですか？')">
                                         削除
                                     </button>
                                  </form>
