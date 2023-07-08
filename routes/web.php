@@ -15,7 +15,10 @@ use App\Book;
 use Illuminate\Http\Request;
 
 //本ダッシュボード表示
-Route::get('/', 'BooksController@index');
+Route::get('/', 'BooksController@index')->name('books.index');;
+
+// 検索機能追加
+Route::get('/search', 'BooksController@index')->name('search');
 
 //登録処理
 Route::post('/books','BooksController@store');

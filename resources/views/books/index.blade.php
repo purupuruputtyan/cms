@@ -57,10 +57,17 @@
             </div>
         </form>
     </div>
+
+    <!--検索機能のフォーム-->
+    <form action="{{ route('search') }}" method="GET" class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2 ml-5" type="search" placeholder="キーワードを入力" name="search" value="{{ $search }}">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">検索</button>
+    </form>
+
     <!-- Book: 既に登録されてる本のリスト -->
      <!-- 現在の本 -->
     @if (count($books) > 0)
-        <h4 class="ml-5">本一覧</h4>
+        <h4 class="ml-5 mt-5">本一覧</h4>
         <div class="card-body">
             <div class="card-body">
                 <table class="table table-striped task-table">

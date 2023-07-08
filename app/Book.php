@@ -55,5 +55,18 @@ class Book extends Model
             'published.required' => '公開フラグは必須項目です。',
         ];
     }
+
+    public static function searchBooksByUserId($userId, $search)
+    {
+        return self::with('user')
+            ->where('user_id', $userId)
+            ->where(function ($query) use ($search) {
+                $query->where('item_name', 'like', '%' . $search . '%')
+                    ->orWhere('item_amount', 'like', '%' . $search . '%')
+                    ->orWhere('item_number', 'like', '%' . $search . '%');
+            })
+            ->orderBy('created_at', 'asc')
+            ->paginate(3);
+    }
 }
 

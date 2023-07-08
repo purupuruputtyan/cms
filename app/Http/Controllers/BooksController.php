@@ -13,14 +13,24 @@ class BooksController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $books = Book::getBooksByUserId(Auth::user()->id);
+        $search = $request->input('search');
+        $books = Book::searchBooksByUserId(Auth::user()->id, $search);
+
+        if ($search) {
+            return view('books.search', [
+                'books' => $books,
+                'search' => $search
+            ]);
+        }
 
         return view('books.index', [
-            'books' => $books
+            'books' => $books,
+            'search' => $search
         ]);
     }
+
 
     public function edit($book_id)
     {
