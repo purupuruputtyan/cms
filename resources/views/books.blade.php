@@ -66,6 +66,7 @@
                 <table class="table table-striped task-table">
                     <!-- テーブルヘッダ -->
                     <thead>
+                        <th>ユーザー名</th>
                         <th>画像</th>
                         <th>本のタイトル</th>
                         <th>公開日</th>
@@ -79,6 +80,9 @@
                         @foreach ($books as $book)
                             <tr>
                                 <!-- 本の記録概要 -->
+                                <td class="table-text">
+                                  <div>{{ $book->user->name }}</div>
+                                </td>
                                 <td class="table-text">
                                   <div><img src="{{ asset('../upload/' . $book->item_img) }}" width="100"></div>
                                 </td>

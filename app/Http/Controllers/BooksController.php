@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 
 //使うClassを宣言:自分で追加
 use App\Book;   //Bookモデルを使えるようにする
+use App\User;
 use Validator;  //バリデーションを使えるようにする
 use Auth;       //認証モデルを使用する
 
@@ -18,10 +19,21 @@ class BooksController extends Controller
 
     //本ダッシュボード表示
     public function index() {
-        $books = Book::where('user_id',Auth::user()->id)->orderBy('created_at', 'asc')->paginate(3);
+        // $books = Book::where('user_id',Auth::user()->id)->orderBy('created_at', 'asc')->paginate(3);
+        // return view('books', [
+        //     'books' => $books
+        // ]);
+        
+        // $user = User::find(1);
+        // return view('books', compact('user'));
+        // $books = Book::where('user_id', Auth::user()->id)->orderBy('created_at', 'asc')->paginate(3);
+        $books = Book::with('user')->where('user_id', Auth::user()->id)->orderBy('created_at', 'asc')->paginate(3);
+        // $user変数は不要なので削除してください
+        
         return view('books', [
             'books' => $books
         ]);
+        
     }
 
     //更新画面
@@ -55,7 +67,6 @@ class BooksController extends Controller
         $books->item_name   = $request->item_name;
         $books->item_number = $request->item_number;
         $books->item_amount = $request->item_amount;
-        $books->item_img = $filename;
         $books->published   = $request->published;
         $books->save();
         return redirect('/');
