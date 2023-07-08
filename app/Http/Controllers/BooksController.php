@@ -1,117 +1,94 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
-
-
-//使うClassを宣言:自分で追加
-use App\Book;   //Bookモデルを使えるようにする
-use App\User;
-use Validator;  //バリデーションを使えるようにする
-use Auth;       //認証モデルを使用する
+use App\Book;
+use Auth;
 
 class BooksController extends Controller
 {
-    //コンストラクタ （このクラスが呼ばれたら最初に処理をする）
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    //本ダッシュボード表示
-    public function index() {
-        // $books = Book::where('user_id',Auth::user()->id)->orderBy('created_at', 'asc')->paginate(3);
-        // return view('books', [
-        //     'books' => $books
-        // ]);
-        
-        // $user = User::find(1);
-        // return view('books', compact('user'));
-        // $books = Book::where('user_id', Auth::user()->id)->orderBy('created_at', 'asc')->paginate(3);
-        $books = Book::with('user')->where('user_id', Auth::user()->id)->orderBy('created_at', 'asc')->paginate(3);
-        // $user変数は不要なので削除してください
-        
-        return view('books', [
+    public function index()
+    {
+        $books = Book::getBooksByUserId(Auth::user()->id);
+
+        return view('books.index', [
             'books' => $books
         ]);
-        
     }
 
-    //更新画面
-    public function edit($book_id){
-        $books = Book::where('user_id',Auth::user()->id)->find($book_id);
-        return view('booksedit', [
-            'book' => $books
+    public function edit($book_id)
+    {
+        $book = Book::getBookByUserId($book_id, Auth::user()->id);
+
+        return view('books.edit', [
+            'book' => $book
         ]);
     }
 
-    //更新
-    public function update(Request $request) {
-        //バリデーション
-        $validator = Validator::make($request->all(), [
-            'id' => 'required',
-            'item_name' => 'required|min:3|max:255',
-            'item_number' => 'required|min:1|max:3',
-            'item_amount' => 'required|max:6',
-            'published' => 'required',
-        ]);
-        //バリデーション:エラー
-        if ($validator->fails()) {
-            return redirect('/')
-                ->withInput()
-                ->withErrors($validator);
+    public function update(Request $request)
+    {
+        $book = Book::getBookByUserId($request->id, Auth::user()->id);
+
+        if ($book) {
+            $validator = $book->validate($request->all());
+
+            if ($validator->fails()) {
+                return redirect('/')
+                    ->withInput()
+                    ->withErrors($validator);
+            }
+
+            $book->fill($request->only([
+                'item_name',
+                'item_number',
+                'item_amount',
+                'published',
+            ]));
+            $book->save();
         }
 
-        //データ更新
-        $books = Book::find($request->id);
-        $books = Book::where('user_id',Auth::user()->id)->find($request->id);
-        $books->item_name   = $request->item_name;
-        $books->item_number = $request->item_number;
-        $books->item_amount = $request->item_amount;
-        $books->published   = $request->published;
-        $books->save();
         return redirect('/');
     }
 
-    //登録
-    public function store(Request $request) {
-        //バリデーション
-        $validator = Validator::make($request->all(), [
-            'item_name' => 'required|min:3|max:255',
-            'item_number' => 'required|min:1|max:3',
-            'item_amount' => 'required|max:6',
-            'published' => 'required',
-        ]);
-        //バリデーション:エラー
+    public function store(Request $request)
+    {
+        $validator = Book::validate($request->all());
+
         if ($validator->fails()) {
             return redirect('/')
                 ->withInput()
                 ->withErrors($validator);
         }
 
-        $file = $request->file('item_img'); //file取得
-          if( !empty($file) ){                //fileが空かチェック
-              $filename = $file->getClientOriginalName();   //ファイル名を取得
-              $move = $file->move('../upload/',$filename);  //ファイルを移動：パスが“./upload/”の場合もあるCloud9
-          }else{
-              $filename = "";
-          }
+        $file = $request->file('item_img');
+        $filename = '';
 
-        //Eloquentモデル（登録処理）
-        $books = new Book;
-        $books->user_id  = Auth::user()->id; //追加のコード
-        $books->item_name = $request->item_name;
-        $books->item_number = $request->item_number;
-        $books->item_amount = $request->item_amount;
-        $books->item_img = $filename;
-        $books->published = $request->published;
-        $books->save();
+        if (!empty($file)) {
+            $filename = $file->getClientOriginalName();
+            $file->move('../upload/', $filename);
+        }
+
+        $book = new Book;
+        $book->user_id = Auth::user()->id;
+        $book->item_name = $request->item_name;
+        $book->item_number = $request->item_number;
+        $book->item_amount = $request->item_amount;
+        $book->item_img = $filename;
+        $book->published = $request->published;
+        $book->save();
+
         return redirect('/')->with('message', '本登録が完了しました');
     }
 
-    //削除処理
-    public function destroy(Book $book) {
+    public function destroy(Book $book)
+    {
         $book->delete();
         return redirect('/');
     }
-
 }
