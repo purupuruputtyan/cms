@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Book;
 use Auth;
+use Illuminate\Support\Facades\Storage;
 
 class BooksController extends Controller
 {
@@ -76,12 +77,17 @@ class BooksController extends Controller
                 ->withErrors($validator);
         }
 
+        // アップロード処理
         $file = $request->file('item_img');
         $filename = '';
 
-        if (!empty($file)) {
+        if ($file) {
+            // 画像が指定されている場合はアップロードする
             $filename = $file->getClientOriginalName();
-            $file->move('../upload/', $filename);
+            $file->move('upload', $filename);
+        } else {
+            // 画像が指定されていない場合はデフォルトの画像ファイル名を設定する
+            $filename = 'no_image.jpg';
         }
 
         $book = new Book;
