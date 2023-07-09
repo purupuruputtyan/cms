@@ -50,7 +50,7 @@
             <!-- 本 登録ボタン -->
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-6">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary mt-3">
                         保存
                     </button>
                 </div>
@@ -138,15 +138,15 @@
             </div>
         </div>
     @endif
-    
+
     <!-- BookのCSVインポートフォーム -->
-    <form action="{{ route('csv.import') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('csv.import') }}" method="POST" enctype="multipart/form-data" class="ml-5">
         @csrf
         <input type="file" name="csv_file">
         <button type="submit">CSV Import</button>
     </form>
-    
+
     <!-- BookのCSVダウンロードリンク -->
-    <a href="{{ route('csv.download') }}">CSV Download</a>
+    <a href="{{ route('csv.download') }}" class="btn btn-primary ml-5 mt-3">CSV Download</a>
 
 @endsection

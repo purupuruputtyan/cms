@@ -67,7 +67,7 @@ class Book extends Model
                     ->orWhere('item_amount', 'like', '%' . $search . '%')
                     ->orWhere('item_number', 'like', '%' . $search . '%');
             })
-            ->orderBy('created_at', 'asc')
+            ->orderBy('created_at', 'desc')
             ->paginate(3);
     }
 }
