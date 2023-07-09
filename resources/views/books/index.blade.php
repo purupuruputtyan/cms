@@ -19,7 +19,7 @@
             <!-- 本のタイトル -->
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="book" class="col-sm-3 control-label">Book</label>
+                    <label for="book" class="col-sm-3 control-label">本の題名</label>
                     <input type="text" name="item_name" class="form-control">
                 </div>
 
@@ -31,7 +31,7 @@
 
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="number" class="col-sm-3 control-label">数</label>
+                    <label for="number" class="col-sm-3 control-label">ページ数</label>
                     <input type="text" name="item_number" class="form-control">
                 </div>
 
@@ -78,7 +78,7 @@
                         <th>本のタイトル</th>
                         <th>公開日</th>
                         <th>金額</th>
-                        <th>数</th>
+                        <th>ページ数</th>
                         <th>&nbsp;</th>
                         <th>&nbsp;</th>
                     </thead>
