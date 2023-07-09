@@ -13,6 +13,7 @@
 
 use App\Book;
 use Illuminate\Http\Request;
+use App\Http\Controllers\CSVController;
 
 //本ダッシュボード表示
 Route::get('/', 'BooksController@index')->name('books.index');;
@@ -31,6 +32,10 @@ Route::post('/books/update','BooksController@update');
 
 //本を削除
 Route::delete('/book/{book}','BooksController@destroy');
+
+//CSVインポート/ダウンロード機能
+Route::get('/csv/download', [CSVController::class, 'download'])->name('csv.download');
+Route::post('/csv/import', [CSVController::class, 'import'])->name('csv.import');
 
 //Auth
 Auth::routes();

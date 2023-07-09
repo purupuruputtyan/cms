@@ -138,6 +138,15 @@
             </div>
         </div>
     @endif
-
+    
+    <!-- BookのCSVインポートフォーム -->
+    <form action="{{ route('csv.import') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <input type="file" name="csv_file">
+        <button type="submit">CSV Import</button>
+    </form>
+    
+    <!-- BookのCSVダウンロードリンク -->
+    <a href="{{ route('csv.download') }}">CSV Download</a>
 
 @endsection
