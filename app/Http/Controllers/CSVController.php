@@ -21,7 +21,7 @@ class CSVController extends Controller
                          'item_amount',
                          'published',
                          'item_img'
-                         ]); // CSVヘッダー行を追加
+        ]);
 
         foreach ($books as $book) {
             $csv->insertOne([$book->user_id,
@@ -39,23 +39,31 @@ class CSVController extends Controller
 
     public function import(Request $request)
     {
-        $file = $request->file('csv_file');
+        if ($request->hasFile('csv_file')) {
+            $file = $request->file('csv_file');
 
-        $csv = Reader::createFromPath($file->getPathname(), 'r');
-        $csv->setHeaderOffset(0);
+            $csv = Reader::createFromPath($file->getPathname(), 'r');
+            $csv->setHeaderOffset(0);
 
-        foreach ($csv as $row) {
-            Book::create([
-                'user_id' => $row['user_id'],
-                'id' => $row['id'],
-                'item_name' => $row['item_name'],
-                'item_amount' => $row['item_amount'],
-                'item_amount' => $row['item_amount'],
-                'published' => $row['published'],
-                'item_img' => $row['item_img']
-            ]);
+            //dd($csv->getHeader()); // ヘッダー行を表示
+
+            foreach ($csv as $row) {
+                Book::create([
+                    'user_id' => $row['user_id'],
+                    'id' => $row['id'],
+                    'item_name' => $row['item_name'],
+                    'item_number' => $row['item_number'],
+                    'item_amount' => $row['item_amount'],
+                    'published' => $row['published'],
+                    'item_img' => $row['item_img']
+                ]);
+            }
+        } else {
+
         }
 
         return redirect()->back()->with('success', 'CSV import successful.');
     }
+
+
 }

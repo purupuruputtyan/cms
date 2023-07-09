@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Validator;
 
 class Book extends Model
 {
+    protected $fillable = ['user_id', 'id', 'item_name', 'item_number', 'item_amount', 'published', 'item_img'];
+
     public function user()
     {
         return $this->belongsTo(User::class);
