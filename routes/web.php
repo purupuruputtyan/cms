@@ -24,6 +24,10 @@ Route::get('/search', 'BooksController@index')->name('search');
 //登録処理
 Route::post('/books','BooksController@store');
 
+// 本の詳細表示
+Route::get('/books/{book}', 'BooksController@show')->name('books.show');
+
+
 //更新画面
 Route::get('/booksedit/{books}','BooksController@edit');
 

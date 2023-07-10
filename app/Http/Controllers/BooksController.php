@@ -111,4 +111,18 @@ class BooksController extends Controller
         $book->delete();
         return redirect('/');
     }
+    
+    public function show($book_id)
+    {
+        $book = Book::getBookByUserId($book_id, Auth::user()->id);
+    
+        if ($book) {
+            return view('books.show', [
+                'book' => $book
+            ]);
+        } else {
+            return redirect('/')->with('error', '本が見つかりません');
+        }
+    }
+
 }

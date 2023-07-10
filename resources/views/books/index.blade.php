@@ -94,7 +94,7 @@
                                   <div><img src="{{ asset('../upload/' . $book->item_img) }}" width="100"></div>
                                 </td>
                                 <td class="table-text">
-                                    <div>{{ $book->item_name }}</div>
+                                    <div><a href="{{ route('books.show', $book->id) }}">{{ $book->item_name }}</a></div>
                                 </td>
                                 <td class="table-text">
                                     <div>{{ $book->published }}</div>
