@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
+<h3 class="ml-5">詳細画面</h3>
 <div class="card-body">
     <div class="card-body">
         <table class="table table-striped task-table">
