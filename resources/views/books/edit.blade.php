@@ -1,36 +1,42 @@
 @extends('layouts.app')
 @section('content')
 <div class="row container">
+    <h3 class="ml-5">編集画面</h3>
     <div class="col-md-12">
         @include('common.errors')
         <form action="{{ url('books/update') }}" method="POST" enctype="multipart/form-data">
-            <!-- item_name -->
-            <div class="form-group">
-                <label for="item_name">本の題名</label>
-                <input type="text" name="item_name" class="form-control" value="{{ $book->item_name }}">
-            </div>
-            <!-- /item_name -->
+            <div class="form-row">
+                <!-- item_name -->
+                <div class="form-group col-md-6">
+                    <label for="book" class="col-sm-3 control-label">本の題名</label>
+                    <input type="text" name="item_name" class="form-control">
+                </div>
+                <!-- /item_name -->
 
-            <!-- item_amount -->
-            <div class="form-group">
-                <label for="item_amount">金額</label>
-                <input type="text" name="item_amount" class="form-control" value="{{ $book->item_amount }}">
+                <!-- item_amount -->
+                <div class="form-group col-md-6">
+                    <label for="amount" class="col-sm-3 control-label">金額</label>
+                    <input type="text" name="item_amount" class="form-control">
+                </div>
+                <!-- /item_amount -->
             </div>
-            <!-- /item_amount -->
 
-            <!-- item_number -->
-            <div class="form-group">
-                <label for="item_number">ページ数</label>
-                <input type="text" name="item_number" class="form-control" value="{{ $book->item_number }}">
-            </div>
-            <!-- /item_number -->
+　　　　　　<div class="form-row">
+                <!-- item_number -->
+                <div class="form-group col-md-6">
+                    <label for="item_number">ページ数</label>
+                    <input type="text" name="item_number" class="form-control" value="{{ $book->item_number }}">
+                </div>
+                <!-- /item_number -->
 
-            <!-- published -->
-            <div class="form-group">
-                <label for="published">公開日</label>
-                <input type="datetime" name="published" class="form-control" value="{{ $book->published }}" />
+
+                <!-- published -->
+                <div class="form-group col-md-6">
+                    <label for="published">公開日</label>
+                    <input type="datetime" name="published" class="form-control" value="{{ $book->published }}" />
+                </div>
+                <!-- /published -->
             </div>
-            <!-- /published -->
 
             <!-- item_img -->
             <div class="form-group">
